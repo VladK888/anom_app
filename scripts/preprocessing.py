@@ -3,6 +3,21 @@ import pandas as pd
 import pandas as pd
 import numpy as np
 
+
+def main():
+    st.title("Protected Application")
+
+    # Простая форма аутентификации
+    password = st.text_input("Enter password", type="password")
+
+    if password == "money":
+        st.write("Welcome to the protected app!")
+        # Ваш код для основного приложения
+    else:
+        st.write("Invalid password")
+
+
+
 def preprocess_data(data):
     # Преобразуем столбец 'close' в числовой формат, заменяя нечисловые значения на NaN
     data['close'] = pd.to_numeric(data['close'], errors='coerce')
