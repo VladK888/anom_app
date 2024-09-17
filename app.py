@@ -4,21 +4,15 @@ from scripts.preprocessing import preprocess_data,calculate_duration_and_changes
 from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
 
-
-def main():
+# Добавляем проверку пароля в самое начало
+def password_protection():
     st.title("Protected Application")
+    password = st.text_input("Enter password", type="password")  # Поле для ввода пароля
+    if password != "your_password":  # Замените "your_password" на ваш пароль
+        st.error("Invalid password")
+        st.stop()  # Останавливаем выполнение приложения, если пароль неверный
 
-    # Простая форма аутентификации
-    password = st.text_input("Enter password", type="password")
-
-    if password == "your_password":
-        st.write("Welcome to the protected app!")
-        # Ваш код для основного приложения
-    else:
-        st.write("Invalid password")
-
-if __name__ == "__main__":
-    main()
+password_protection()  # Вызов функции проверки пароля
 
 
 # Загрузка данных
