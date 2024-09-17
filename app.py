@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from scripts.preprocessing import preprocess_data,calculate_duration_and_changes
-from scripts.anomaly_detection import detect_anomalies
-from scripts.predictions import arima_model
 from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
 
