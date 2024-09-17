@@ -5,8 +5,9 @@ from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
 
 # Загрузка данных
-file_path = r"C:\Users\wlad8\financial_anomalies_app\data\gold_d.csv"
+file_path = 'data/gold_d.csv'
 data = pd.read_csv(file_path)
+
 
 # Предобработка данных
 data = preprocess_data(data)
