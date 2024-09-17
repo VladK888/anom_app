@@ -1,12 +1,25 @@
 import streamlit as st
 import pandas as pd
-from scripts.preprocessing import preprocess_data,calculate_duration_and_changes, main
+from scripts.preprocessing import preprocess_data,calculate_duration_and_changes
 from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
 
 
+def main():
+    st.title("Protected Application")
+
+    # Простая форма аутентификации
+    password = st.text_input("Enter password", type="password")
+
+    if password == "your_password":
+        st.write("Welcome to the protected app!")
+        # Ваш код для основного приложения
+    else:
+        st.write("Invalid password")
+
 if __name__ == "__main__":
     main()
+
 
 # Загрузка данных
 file_path = 'data/gold_d.csv'
