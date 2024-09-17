@@ -1,8 +1,12 @@
 import streamlit as st
 import pandas as pd
-from scripts.preprocessing import preprocess_data,calculate_duration_and_changes
+from scripts.preprocessing import preprocess_data,calculate_duration_and_changes, main
 from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
+
+
+if __name__ == "__main__":
+    main()
 
 # Загрузка данных
 file_path = 'data/gold_d.csv'
