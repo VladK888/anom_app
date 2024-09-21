@@ -49,10 +49,10 @@ if tab == "Investment Simulation":
     st.header("Investment Simulator")
     investment_simulation(filtered_data)
 
-elif tab == "Analysis":
+#elif tab == "Analysis":
     # Select symbol
     #analyzer()
 
-elif tab == "Seasonality":
+#elif tab == "Seasonality":
     # Call seasonality function (assumed to have its own logic)
     #seasonality()
