@@ -1,61 +1,58 @@
 import streamlit as st
 import pandas as pd
-from scripts.preprocessing import preprocess_data,calculate_duration_and_changes
+from scripts.preprocessing import preprocess_data, calculate_duration_and_changes
+from scripts.analyzer import analyzer
+from scripts.seasonality import seasonality
 from scripts.investment_sim import investment_simulation
 from visualization import plot_price_chart
 
-# Добавляем проверку пароля в самое начало
+# Password protection
 def password_protection():
     st.title("Protected Application")
-    password = st.text_input("Enter password", type="password")  # Поле для ввода пароля
-    if password != "your_password":  # Замените "your_password" на ваш пароль
+    password = st.text_input("Enter password", type="password")
+    if password != "your_password":  # Replace "your_password" with your actual password
         st.error("Invalid password")
-        st.stop()  # Останавливаем выполнение приложения, если пароль неверный
+        st.stop()  # Stop the application if the password is incorrect
 
-password_protection()  # Вызов функции проверки пароля
+password_protection()  # Call the password protection function
 
-
-# Загрузка данных
+# Load data
 file_path = 'data/gold_d.csv'
 data = pd.read_csv(file_path)
 
-
-# Предобработка данных
+# Preprocess data
 data = preprocess_data(data)
 
-# Выбор символа
-symbols = data['symbol'].unique()
-selected_symbol = st.selectbox("Выберите символ", symbols)
+# Navigation for tabs
+tab = st.sidebar.selectbox("Select a tab", ("Investment Simulation", "Analysis", "Seasonality"))
 
-# Фильтрация данных по выбранному символу
-filtered_data = data[data['symbol'] == selected_symbol]
+if tab == "Investment Simulation":
+    # Select symbol
+    symbols = data['symbol'].unique()
+    selected_symbol = st.selectbox("Choose symbol", symbols, key="symbol_selectbox")
 
-# Выбор диапазона дат
-start_date = st.date_input("Выберите начальную дату", value=filtered_data.index.min())
-end_date = st.date_input("Выберите конечную дату", value=filtered_data.index.max())
+    # Filter data by selected symbol
+    filtered_data = data[data['symbol'] == selected_symbol]
 
-# Фильтрация данных по выбранному диапазону
-filtered_data = filtered_data.loc[start_date:end_date]
+    # Date range selection
+    start_date = st.date_input("Select start date", value=filtered_data.index.min())
+    end_date = st.date_input("Select end date", value=filtered_data.index.max())
 
+    # Filter data by selected date range
+    filtered_data = filtered_data.loc[start_date:end_date]
 
-# Построение графиков
-st.title("Временные Коридоры: Анализ Финансовых Аномалий")
-plot_price_chart(filtered_data)
+    # Plotting charts
+    st.title("Time Corridors: Analysis of Financial Anomalies")
+    plot_price_chart(filtered_data)
 
+    # Investment simulation
+    st.header("Investment Simulator")
+    investment_simulation(filtered_data)
 
+elif tab == "Analysis":
+    # Select symbol
+    analyzer()
 
-# Симуляция инвестиций
-st.header("Симулятор инвестиций")
-investment_simulation(filtered_data)
-
-
-
-# Рассчитываем среднюю продолжительность
-avg_duration_above, avg_duration_below, avg_change_above, avg_change_below= calculate_duration_and_changes(filtered_data)
-
-
-st.write(f"Средняя продолжительность, когда цена выше обоих МА: {avg_duration_above:.2f} ")
-st.write(f"Средняя продолжительность, когда цена ниже обоих МА: {avg_duration_below:.2f} ")
-
-st.write(f"Средний рост, когда цена выше обоих МА: {avg_change_above:.2f} ")
-st.write(f"Средний падение, когда цена ниже обоих МА: {avg_change_below:.2f} ")
+elif tab == "Seasonality":
+    # Call seasonality function (assumed to have its own logic)
+    seasonality()
