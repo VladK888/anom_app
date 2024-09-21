@@ -51,8 +51,8 @@ if tab == "Investment Simulation":
 
 elif tab == "Analysis":
     # Select symbol
-    analyzer()
+    #analyzer()
 
 elif tab == "Seasonality":
     # Call seasonality function (assumed to have its own logic)
-    seasonality()
+    #seasonality()
