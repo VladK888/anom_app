@@ -32,8 +32,8 @@ def detect_anomalies():
     data = pd.merge(data, news_data, on='Datetime', how='left')
 
     # Инициализация событий
-    data['Event'] = 0  # Изначально 0
-    data['Event_Name'] = None  # Изначально None для названий событий
+    data['Event'] = 0
+    data['Event_Name'] = None
 
     # Заполнение событий
     for idx, row in news_data.iterrows():
@@ -48,17 +48,16 @@ def detect_anomalies():
     # Добавляем линию закрытия
     fig.add_trace(go.Scatter(x=data['Datetime'], y=data['close'], mode='lines', name='Закрытие', line=dict(color='blue')))
 
-    # Отображаем события
+    # Отображаем события с номерами
     for i, row in data[data['Event'] > 0].iterrows():
-        event_name = row['Event_Name']
         fig.add_trace(go.Scatter(
             x=[row['Datetime']],
             y=[row['close']],
             mode='markers+text',
             marker=dict(color='red', size=10),
-            text=[event_name],
+            text=[str(row['Event'])],  # Отображаем номер события
             textposition="top center",
-            name=f'Событие {row["Event"]}'
+            name='Событие'
         ))
 
     # Настройки графика
