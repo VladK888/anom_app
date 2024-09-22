@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-def detect_anomalies():
+def detect_anomalies(symbol):
         def load_data(symbol):
             file_path = f'data/{symbol}_data.csv'
             data = pd.read_csv(file_path)
@@ -24,7 +24,7 @@ def detect_anomalies():
         st.title("Analysis of Financial Anomalies")
 
         # Выбор символа
-        selected_symbol = st.selectbox("Choose symbol", symbols, key="anomaly_symbol")
+        selected_symbol = st.selectbox("Choose symbol", symbol, key="anomaly_symbol")
 
         # Загрузка данных
         data = load_data(selected_symbol)
