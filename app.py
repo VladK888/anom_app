@@ -60,4 +60,4 @@ elif tab == "Seasonality":
 
 elif tab == "Anomalies":
     # Call seasonality function (assumed to have its own logic)
-    detect_anomalies(symbol)
+    detect_anomalies()
