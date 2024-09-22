@@ -4,6 +4,7 @@ from scripts.preprocessing import preprocess_data, calculate_duration_and_change
 from scripts.analyzer import analyzer
 from scripts.seasonality import seasonality
 from scripts.investment_sim import investment_simulation
+from scripts.anomaly_detection import detect_anomalies
 from visualization import plot_price_chart
 
 # Password protection
