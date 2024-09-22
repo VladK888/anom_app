@@ -46,7 +46,13 @@ def detect_anomalies():
     fig = go.Figure()
 
     # Добавляем линию закрытия
-    fig.add_trace(go.Scatter(x=data['Datetime'], y=data['close'], mode='lines', line=dict(color='blue')))
+    fig.add_trace(go.Scatter(
+        x=data['Datetime'],
+        y=data['close'],
+        mode='lines',
+        line=dict(color='blue'),
+        showlegend=False  # Убираем легенду
+    ))
 
     # Отображаем события с номерами
     for i, row in data[data['Event'] > 0].iterrows():
@@ -56,7 +62,8 @@ def detect_anomalies():
             mode='markers+text',
             marker=dict(color='red', size=10),
             text=[str(row['Event'])],  # Отображаем номер события
-            textposition="top center"
+            textposition="top center",
+            showlegend=False  # Убираем легенду
         ))
 
     # Настройки графика
@@ -64,7 +71,6 @@ def detect_anomalies():
         title='Анализ влияния события на цену',
         xaxis_title='Date',
         yaxis_title='Price',
-        legend=dict(x=0, y=1),
         xaxis_tickangle=-45,
         hovermode='closest'
     )
