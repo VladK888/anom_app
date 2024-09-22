@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit as st
 
 def detect_anomalies():
         def load_data(symbol):
