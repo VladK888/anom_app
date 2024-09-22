@@ -169,8 +169,8 @@ def analyzer():
         # Время нахождения выше/ниже SMA_50
         st.subheader(f"Time spent above and below SMA_200 {selected_symbol}")
         fig, ax = plt.subplots(figsize=(10, 6))
-        plt.hist(filtered_data[filtered_data['close'] > filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Выше SMA_50')
-        plt.hist(filtered_data[filtered_data['close'] <= filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Ниже SMA_50')
+        plt.hist(filtered_data[filtered_data['close'] > filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Above SMA_50')
+        plt.hist(filtered_data[filtered_data['close'] <= filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Below SMA_50')
         plt.xlabel('Price close')
         plt.ylabel('Frequency')
         plt.title('Time spent above and below SMA_200')

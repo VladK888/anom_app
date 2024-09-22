@@ -62,8 +62,8 @@ def detect_anomalies():
     # Настройки графика
     fig.update_layout(
         title='Анализ влияния события на цену',
-        xaxis_title='Дата',
-        yaxis_title='Цена',
+        xaxis_title='Date',
+        yaxis_title='Price',
         legend=dict(x=0, y=1),
         xaxis_tickangle=-45,
         hovermode='closest'
