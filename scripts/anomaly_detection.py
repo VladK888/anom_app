@@ -81,7 +81,7 @@ def detect_anomalies():
 
         event_info.set_index('Datetime', inplace=True)
 
-        st.plt.show()
+        st.pyplot(plt)
 
         st.write(event_info)
 
