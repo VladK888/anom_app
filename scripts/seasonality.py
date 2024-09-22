@@ -13,7 +13,7 @@ def seasonality():
 
         # Функция для загрузки данных из CSV
         def load_data(symbol):
-            file_path = f'data/{symbol}_data.csv'
+            file_path = f'data/{symbol}_data_D1.csv'
             df = pd.read_csv(file_path, parse_dates=['Datetime'], index_col='Datetime')
             return df
 
