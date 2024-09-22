@@ -14,13 +14,9 @@ def detect_anomalies():
 
         # Функция для загрузки данных из CSV
         def load_data_2():
-            file_path = f'data/News.csv'
+            file_path = f'data/News_data.csv'
             news_data = pd.read_csv(file_path)
-            news_data['Datetime'] = pd.to_datetime(news_data['Date'] + ' ' + news_data['Time'])
 
-        # Удаляем дубликаты, оставляя только строки, где все значения NaN
-            news_data = news_data[~news_data.duplicated(keep='first', subset=['Event']) |
-                                news_data[['Actual', 'Forecast', 'Previous']].notna().any(axis=1)]
             return news_data
 
                 # Заголовок приложения
