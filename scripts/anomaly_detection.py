@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def detect_anomalies(data):
+def detect_anomalies():
         def load_data(symbol):
             file_path = f'data/{symbol}_data.csv'
             data = pd.read_csv(file_path)

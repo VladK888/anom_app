@@ -24,7 +24,7 @@ data = pd.read_csv(file_path)
 data = preprocess_data(data)
 
 # Navigation for tabs
-tab = st.sidebar.selectbox("Select a tab", ("Investment Simulation", "Analysis", "Seasonality"))
+tab = st.sidebar.selectbox("Select a tab", ("Investment Simulation", "Analysis", "Seasonality","Anomalies"))
 
 if tab == "Investment Simulation":
     # Select symbol
@@ -56,3 +56,7 @@ elif tab == "Analysis":
 elif tab == "Seasonality":
     # Call seasonality function (assumed to have its own logic)
     seasonality()
+
+elif tab == "Anomalies":
+    # Call seasonality function (assumed to have its own logic)
+    detect_anomalies()
