@@ -46,7 +46,7 @@ def detect_anomalies():
     fig = go.Figure()
 
     # Добавляем линию закрытия
-    fig.add_trace(go.Scatter(x=data['Datetime'], y=data['close'], mode='lines', name='Закрытие', line=dict(color='blue')))
+    fig.add_trace(go.Scatter(x=data['Datetime'], y=data['close'], mode='lines', line=dict(color='blue')))
 
     # Отображаем события с номерами
     for i, row in data[data['Event'] > 0].iterrows():
@@ -56,8 +56,7 @@ def detect_anomalies():
             mode='markers+text',
             marker=dict(color='red', size=10),
             text=[str(row['Event'])],  # Отображаем номер события
-            textposition="top center",
-            name='Событие'
+            textposition="top center"
         ))
 
     # Настройки графика
