@@ -207,7 +207,6 @@ def Seasonality_by_hours(df):
     # Симуляция стратегии
     initial_investment = 10000
     balance = initial_investment
-    position = 0  # 1 если купили, -1 если продали
     trades = []  # Для хранения информации о сделках
     cumulative_returns = []  # Для хранения кумулятивной доходности
 
@@ -219,53 +218,38 @@ def Seasonality_by_hours(df):
 
         if signal is not None:
             action = signal[2]
+            open_price = row['open']
+            close_price = row['close']
 
-            if action == 'Buy' and position == 0:
-                # Покупка
-                open_price = row['open']
-                position = balance / open_price  # Количество купленных акций
-                trade_time = row.name  # Дата и время открытия сделки
-                trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Buy'})
+            if action == 'Buy':
+                # Расчет PnL для покупки
+                pnl = close_price - open_price
+                trades.append({
+                    'Open Time': row.name,
+                    'Open Price': open_price,
+                    'Close Time': row.name,
+                    'Close Price': close_price,
+                    'PnL': pnl,
+                    'Return (%)': (pnl / initial_investment) * 100
+                })
 
-                # Закрытие позиции
-                close_price = row['close']
-                balance = position * close_price
-                trades[-1]['Close Time'] = trade_time  # Дата и времени закрытия сделки
-                trades[-1]['Close Price'] = close_price
+            elif action == 'Sell':
+                # Расчет PnL для продажи (шорта)
+                pnl = open_price - close_price
+                trades.append({
+                    'Open Time': row.name,
+                    'Open Price': open_price,
+                    'Close Time': row.name,
+                    'Close Price': close_price,
+                    'PnL': pnl,
+                    'Return (%)': (pnl / initial_investment) * 100
+                })
 
-                # Расчет PnL и доходности
-                pnl = (close_price - open_price)# * position
-                trades[-1]['PnL'] = pnl
-                trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
-                cumulative_returns.append((pnl / initial_investment) * 100)
-
-                position = 0  # Сброс позиции после закрытия
-
-            elif action == 'Sell' and position == 0:
-                # Продажа (шорт)
-                open_price = row['open']
-                position = -balance / open_price  # Отрицательная позиция для шорта
-                trade_time = row.name  # Дата и времени открытия сделки
-                trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Sell'})
-
-                # Закрытие позиции
-                close_price = row['close']
-                balance = -position * close_price  # Позиция должна быть положительной
-                trades[-1]['Close Time'] = trade_time  # Дата и времени закрытия сделки
-                trades[-1]['Close Price'] = close_price
-
-                # Расчет PnL и доходности
-                pnl = (open_price - close_price)# * -position
-                trades[-1]['PnL'] = pnl
-                trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
-                cumulative_returns.append((pnl / initial_investment) * 100)
-
-                position = 0  # Сброс позиции после закрытия
+            # Добавление доходности в кумулятивную доходность
+            cumulative_returns.append((pnl / initial_investment) * 100)
 
     # Преобразование сделок в DataFrame для отображения
     trades_df = pd.DataFrame(trades)
-    total_return = (balance - initial_investment) / initial_investment
-    annual_return = (1 + total_return) ** (12 / 3) - 1
 
     # Отображение сделок
     st.write("Trades Summary:")
@@ -297,8 +281,9 @@ def Seasonality_by_hours(df):
     plt.tight_layout()
     st.pyplot(plt)
 
-    st.write(f"Total Return: {total_return * 100:.2f}%")
-    st.write(f"Annual Return: {annual_return * 100:.2f}%")
+    total_return = (sum(trades_df['PnL']) / initial_investment) * 100
+    st.write(f"Total Return: {total_return:.2f}%")
+
 
 
 def investment_simulation():
