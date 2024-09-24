@@ -252,8 +252,8 @@ def Seasonality_by_hours(df):
     trades_df = pd.DataFrame(trades)
 
     # Отображение сделок
-    st.write("Trades Summary:")
-    st.dataframe(trades_df)
+    #st.write("Trades Summary:")
+    #st.dataframe(trades_df)
 
     # Отображение кумулятивной доходности
     #st.write("Cumulative Returns Over Time:")
