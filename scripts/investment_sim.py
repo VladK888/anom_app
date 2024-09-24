@@ -170,6 +170,13 @@ def Return_Average(data, window=50, z_threshold=2):
     st.write(f"Annual Return: {annual_return * 100:.2f}%")
 
 def Seasonality_by_hours(df):
+    # Проверка наличия необходимых столбцов
+    required_columns = ['range_2', 'range_3', 'open', 'close']
+    for col in required_columns:
+        if col not in df.columns:
+            st.error(f"Column '{col}' does not exist in the data.")
+            return
+
     # Добавление столбцов с днем недели и часом
     df['day_of_week'] = df.index.day_name()  # Имя дня недели
     df['hour'] = df.index.hour  # Час
@@ -196,10 +203,8 @@ def Seasonality_by_hours(df):
         range_3_value = heatmap_data_3.loc[hour, day]
 
         # Определяем направление: покупка или продажа
-        if range_3_value > 0:
-            signals.append((hour, day, 'Buy'))
-        else:
-            signals.append((hour, day, 'Sell'))
+        action = 'Buy' if range_3_value > 0 else 'Sell'
+        signals.append((hour, day, action))
 
     # Симуляция стратегии
     initial_investment = 10000
@@ -214,60 +219,63 @@ def Seasonality_by_hours(df):
         current_day = row['day_of_week']
         signal = next((s for s in signals if s[0] == current_hour and s[1] == current_day), None)
 
-        if signal and signal[2] == 'Buy' and position == 0:
-            # Покупка
-            open_price = row['open']
-            position = balance / open_price
-            trade_time = row.name  # Дата и время открытия сделки
-            trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Buy'})
+        if signal is not None:
+            action = signal[2]
 
-            # Закрытие позиции
-            close_price = row['close']
-            balance = position * close_price
-            trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
-            trades[-1]['Close Price'] = close_price
+            if action == 'Buy' and position == 0:
+                # Покупка
+                open_price = row['open']
+                position = balance / open_price
+                trade_time = row.name  # Дата и время открытия сделки
+                trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Buy'})
 
-            # Расчет PnL и доходности
-            pnl = (close_price - open_price) * position
-            trades[-1]['PnL'] = pnl
-            trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
-            cumulative_returns.append((pnl / initial_investment) * 100)
+                # Закрытие позиции
+                close_price = row['close']
+                balance = position * close_price
+                trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+                trades[-1]['Close Price'] = close_price
 
-            position = 0  # Сброс позиции после закрытия
+                # Расчет PnL и доходности
+                pnl = (close_price - open_price) * position
+                trades[-1]['PnL'] = pnl
+                trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
+                cumulative_returns.append((pnl / initial_investment) * 100)
 
-        elif signal and signal[2] == 'Sell' and position == 0:
-            # Продажа (шорт)
-            open_price = row['open']
-            position = -balance / open_price  # Отрицательная позиция для шорта
-            trade_time = row.name  # Дата и время открытия сделки
-            trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Sell'})
+                position = 0  # Сброс позиции после закрытия
 
-            # Закрытие позиции
-            close_price = row['close']
-            balance = -position * close_price
-            trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
-            trades[-1]['Close Price'] = close_price
+            elif action == 'Sell' and position == 0:
+                # Продажа (шорт)
+                open_price = row['open']
+                position = -balance / open_price  # Отрицательная позиция для шорта
+                trade_time = row.name  # Дата и время открытия сделки
+                trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Sell'})
 
-            # Расчет PnL и доходности
-            pnl = (open_price - close_price) * -position
-            trades[-1]['PnL'] = pnl
-            trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
-            cumulative_returns.append((pnl / initial_investment) * 100)
+                # Закрытие позиции
+                close_price = row['close']
+                balance = -position * close_price
+                trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+                trades[-1]['Close Price'] = close_price
 
-            position = 0  # Сброс позиции после закрытия
+                # Расчет PnL и доходности
+                pnl = (open_price - close_price) * -position
+                trades[-1]['PnL'] = pnl
+                trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
+                cumulative_returns.append((pnl / initial_investment) * 100)
+
+                position = 0  # Сброс позиции после закрытия
 
     # Преобразование сделок в DataFrame для отображения
     trades_df = pd.DataFrame(trades)
-
-
-
-
-    # Печать итогов
-    #print("Final Results")
-    #print(f"Initial Investment: ${initial_investment:.2f}")
-    #print(f"Final Balance: ${balance:.2f}")
     total_return = (balance - initial_investment) / initial_investment
-    annual_return = (1 + total_return) ** (12 / 3) - 1  # Приведение к годовой доходности
+    annual_return = (1 + total_return) ** (12 / 3) - 1
+
+    # Отображение сделок
+    st.write("Trades Summary:")
+    st.dataframe(trades_df)
+
+    # Отображение кумулятивной доходности
+    st.write("Cumulative Returns Over Time:")
+    st.line_chart(cumulative_returns)
 
 
     # Визуализация доходности по сделке
@@ -282,7 +290,7 @@ def Seasonality_by_hours(df):
     st.pyplot(plt)
 
     # Кумулятивная доходность
-    #cumulative_returns = np.cumsum(cumulative_returns)
+    cumulative_returns = np.cumsum(cumulative_returns)
     plt.figure(figsize=(12, 6))
     plt.plot(cumulative_returns, marker='o', linestyle='-', color='orange')
     plt.title('Cumulative Returns')
