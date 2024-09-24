@@ -3,6 +3,9 @@ import pandas as pd
 from scripts.preprocessing import preprocess_data
 
 
+# Настройка заголовка страницы
+st.set_page_config(page_title="Main", layout="wide")
+
 # Password protection
 def password_protection():
     st.title("Protected Application")
@@ -20,13 +23,5 @@ data = pd.read_csv(file_path)
 # Preprocess data
 data = preprocess_data(data)
 
-# Настройка заголовка и иконки
-st.set_page_config(page_title="Ваше Название", page_icon=":sparkles:", layout="wide")
 
-# Заголовок в боковом меню
-st.sidebar.title("Заголовок бокового меню")
-
-# Основной контент приложения
-st.title("Добро пожаловать в моё приложение!")
-st.write("Здесь находится основной контент приложения.")
 
