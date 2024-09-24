@@ -201,8 +201,6 @@ def Seasonality_by_hours(df):
         hour = row['hour']
         day = row['day_of_week']
         range_3_value = heatmap_data_3.loc[hour, day]
-
-        # Определяем направление: покупка или продажа
         action = 'Buy' if range_3_value > 0 else 'Sell'
         signals.append((hour, day, action))
 
@@ -225,14 +223,14 @@ def Seasonality_by_hours(df):
             if action == 'Buy' and position == 0:
                 # Покупка
                 open_price = row['open']
-                position = balance / open_price
+                position = balance / open_price  # Количество купленных акций
                 trade_time = row.name  # Дата и время открытия сделки
                 trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Buy'})
 
                 # Закрытие позиции
                 close_price = row['close']
                 balance = position * close_price
-                trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+                trades[-1]['Close Time'] = trade_time  # Дата и времени закрытия сделки
                 trades[-1]['Close Price'] = close_price
 
                 # Расчет PnL и доходности
@@ -247,13 +245,13 @@ def Seasonality_by_hours(df):
                 # Продажа (шорт)
                 open_price = row['open']
                 position = -balance / open_price  # Отрицательная позиция для шорта
-                trade_time = row.name  # Дата и время открытия сделки
+                trade_time = row.name  # Дата и времени открытия сделки
                 trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Sell'})
 
                 # Закрытие позиции
                 close_price = row['close']
-                balance = -position * close_price
-                trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+                balance = -position * close_price  # Позиция должна быть положительной
+                trades[-1]['Close Time'] = trade_time  # Дата и времени закрытия сделки
                 trades[-1]['Close Price'] = close_price
 
                 # Расчет PnL и доходности
@@ -267,7 +265,7 @@ def Seasonality_by_hours(df):
     # Преобразование сделок в DataFrame для отображения
     trades_df = pd.DataFrame(trades)
     total_return = (balance - initial_investment) / initial_investment
-    annual_return = ((balance - initial_investment) / initial_investment) ** (12 / 3) - 1
+    annual_return = (1 + total_return) ** (12 / 3) - 1
 
     # Отображение сделок
     st.write("Trades Summary:")
@@ -276,7 +274,6 @@ def Seasonality_by_hours(df):
     # Отображение кумулятивной доходности
     st.write("Cumulative Returns Over Time:")
     st.line_chart(cumulative_returns)
-
 
     # Визуализация доходности по сделке
     plt.figure(figsize=(12, 6))
@@ -300,8 +297,9 @@ def Seasonality_by_hours(df):
     plt.tight_layout()
     st.pyplot(plt)
 
-    st.write(f"Total Return: {total_return*100:.2f}%")
+    st.write(f"Total Return: {total_return * 100:.2f}%")
     st.write(f"Annual Return: {annual_return * 100:.2f}%")
+
 
 def investment_simulation():
     st.title("Investment Strategies Simulation")
