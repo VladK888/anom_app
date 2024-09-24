@@ -20,6 +20,9 @@ data = pd.read_csv(file_path)
 # Preprocess data
 data = preprocess_data(data)
 
+# Настройка заголовка и иконки
+st.set_page_config(page_title="Ваше Название", page_icon=":sparkles:", layout="wide")
+
 # Заголовок в боковом меню
 st.sidebar.title("Заголовок бокового меню")
 
