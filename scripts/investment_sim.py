@@ -282,7 +282,7 @@ def Seasonality_by_hours(df):
     st.pyplot(plt)
 
     # Кумулятивная доходность
-    cumulative_returns = np.cumsum(cumulative_returns)
+    #cumulative_returns = np.cumsum(cumulative_returns)
     plt.figure(figsize=(12, 6))
     plt.plot(cumulative_returns, marker='o', linestyle='-', color='orange')
     plt.title('Cumulative Returns')
