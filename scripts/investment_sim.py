@@ -33,11 +33,11 @@ def Moving_Average(data, small_SMA=50, big_SMA=200):
     for i in range(len(data)):
         if data['Position'][i] == 1 and position == 0:  # Покупка
             position = balance / data['close'][i]
-            st.write(f"Bought at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
+            #st.write(f"Bought at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
             buy_signals.append((data.index[i], data['close'][i]))
         elif data['Position'][i] == -1 and position > 0:  # Продажа
             balance = position * data['close'][i]
-            st.write(f"Sold at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
+            #st.write(f"Sold at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
             profit = (balance - initial_investment) / initial_investment * 100
             returns.append(profit)
             sell_signals.append((data.index[i], data['close'][i]))
@@ -114,10 +114,10 @@ def Return_Average(data, window=50, z_threshold=2):
     for i in range(1, len(data)):
         if data['Position'][i] == 1 and position == 0:  # Покупка
             position = balance / data['close'][i]
-            st.write(f"Bought at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
+            #st.write(f"Bought at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
         elif data['Position'][i] == -1 and position > 0:  # Продажа
             balance = position * data['close'][i]
-            st.write(f"Sold at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
+            #st.write(f"Sold at {data['close'][i]:.2f} on {data.index[i].strftime('%Y-%m-%d')}")
             position = 0
             cumulative_return = (balance - initial_investment) / initial_investment * 100
             cumulative_returns.append(cumulative_return)
@@ -170,21 +170,123 @@ def Seasonality_by_hours(df):
     df['day_of_week'] = df.index.day_name()  # Имя дня недели
     df['hour'] = df.index.hour  # Час
 
-    # Убедитесь, что столбец 'range_2' существует
-    if 'range_2' not in df.columns:
-        st.error("Column 'range_2' does not exist in the data.")
-        return
-
     # Тепловая карта для range_2 (волатильность)
     heatmap_data_2 = df.pivot_table(index='hour', columns='day_of_week', values='range_2', aggfunc='median')
     heatmap_data_2 = heatmap_data_2.reindex(columns=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
-    # Тепловая карта
+    # Тепловая карта для range_3 (направление сделки)
+    heatmap_data_3 = df.pivot_table(index='hour', columns='day_of_week', values='range_3', aggfunc='median')
+    heatmap_data_3 = heatmap_data_3.reindex(columns=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
+
+    # Сортировка по модулю значений (абсолютные значения) range_3 для выбора топ-10 часов
+    heatmap_data_3_abs = heatmap_data_3.abs()
+    heatmap_data_3_flat = heatmap_data_3_abs.stack().reset_index()
+    heatmap_data_3_flat.columns = ['hour', 'day_of_week', 'abs_range_3']
+    top_hours = heatmap_data_3_flat.sort_values(by='abs_range_3', ascending=False).head(10)
+
+    # Принятие решений по топ-10 часам на основе range_3
+    signals = []
+    for _, row in top_hours.iterrows():
+        hour = row['hour']
+        day = row['day_of_week']
+        range_3_value = heatmap_data_3.loc[hour, day]
+
+        # Определяем направление: покупка или продажа
+        if range_3_value > 0:
+            signals.append((hour, day, 'Buy'))
+        else:
+            signals.append((hour, day, 'Sell'))
+
+    # Симуляция стратегии
+    initial_investment = 10000
+    balance = initial_investment
+    position = 0  # 1 если купили, -1 если продали
+    trades = []  # Для хранения информации о сделках
+    cumulative_returns = []  # Для хранения кумулятивной доходности
+
+    for i, row in df.iterrows():
+        # Проверяем, попадает ли текущий час и день в топ-10
+        current_hour = row['hour']
+        current_day = row['day_of_week']
+        signal = next((s for s in signals if s[0] == current_hour and s[1] == current_day), None)
+
+        if signal and signal[2] == 'Buy' and position == 0:
+            # Покупка
+            open_price = row['open']
+            position = balance / open_price
+            trade_time = row.name  # Дата и время открытия сделки
+            trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Buy'})
+
+            # Закрытие позиции
+            close_price = row['close']
+            balance = position * close_price
+            trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+            trades[-1]['Close Price'] = close_price
+
+            # Расчет PnL и доходности
+            pnl = (close_price - open_price) * position
+            trades[-1]['PnL'] = pnl
+            trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
+            cumulative_returns.append((pnl / initial_investment) * 100)
+
+            position = 0  # Сброс позиции после закрытия
+
+        elif signal and signal[2] == 'Sell' and position == 0:
+            # Продажа (шорт)
+            open_price = row['open']
+            position = -balance / open_price  # Отрицательная позиция для шорта
+            trade_time = row.name  # Дата и время открытия сделки
+            trades.append({'Open Time': trade_time, 'Open Price': open_price, 'Type': 'Sell'})
+
+            # Закрытие позиции
+            close_price = row['close']
+            balance = -position * close_price
+            trades[-1]['Close Time'] = trade_time  # Дата и время закрытия сделки
+            trades[-1]['Close Price'] = close_price
+
+            # Расчет PnL и доходности
+            pnl = (open_price - close_price) * -position
+            trades[-1]['PnL'] = pnl
+            trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
+            cumulative_returns.append((pnl / initial_investment) * 100)
+
+            position = 0  # Сброс позиции после закрытия
+
+    # Преобразование сделок в DataFrame для отображения
+    trades_df = pd.DataFrame(trades)
+
+
+
+
+    # Печать итогов
+    #print("Final Results")
+    #print(f"Initial Investment: ${initial_investment:.2f}")
+    #print(f"Final Balance: ${balance:.2f}")
+    total_return = (balance - initial_investment) / initial_investment * 100
+    annual_return = (1 + total_return) ** (3 / 12) - 1  # Приведение к годовой доходности
+    st.write(f"Total Return: {total_return:.2f}%")
+    st.write(f"Annual Return: {annual_return * 100:.2f}%")
+
+    # Визуализация доходности по сделке
     plt.figure(figsize=(12, 6))
-    sns.heatmap(heatmap_data_2, cmap='viridis', annot=True, fmt=".2f", cbar_kws={'label': 'Median Volatility'})
-    plt.title('Volatility Heatmap by Hour and Day of Week')
-    plt.xlabel('Day of Week')
-    plt.ylabel('Hour of Day')
+    plt.plot(trades_df['Open Time'], trades_df['Return (%)'], marker='o', linestyle='-', color='blue')
+    plt.title('Return by Trade')
+    plt.xlabel('Trade Open Time')
+    plt.ylabel('Return (%)')
+    plt.xticks(rotation=45)
+    plt.grid()
+    plt.tight_layout()
+    st.pyplot(plt)
+
+    # Кумулятивная доходность
+    cumulative_returns = np.cumsum(cumulative_returns)
+    plt.figure(figsize=(12, 6))
+    plt.plot(cumulative_returns, marker='o', linestyle='-', color='orange')
+    plt.title('Cumulative Returns')
+    plt.xlabel('Trade Number')
+    plt.ylabel('Cumulative Return (%)')
+    plt.grid()
+    plt.tight_layout()
     st.pyplot(plt)
 
 def investment_simulation():
