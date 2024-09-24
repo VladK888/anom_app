@@ -267,7 +267,7 @@ def Seasonality_by_hours(df):
     # Преобразование сделок в DataFrame для отображения
     trades_df = pd.DataFrame(trades)
     total_return = (balance - initial_investment) / initial_investment
-    annual_return = (1 + total_return) ** (12 / 3) - 1
+    annual_return = ((balance - initial_investment) / initial_investment) ** (12 / 3) - 1
 
     # Отображение сделок
     st.write("Trades Summary:")
