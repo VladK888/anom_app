@@ -234,7 +234,7 @@ def Seasonality_by_hours(df):
                 trades[-1]['Close Price'] = close_price
 
                 # Расчет PnL и доходности
-                pnl = (close_price - open_price) * position
+                pnl = (close_price - open_price)# * position
                 trades[-1]['PnL'] = pnl
                 trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
                 cumulative_returns.append((pnl / initial_investment) * 100)
@@ -255,7 +255,7 @@ def Seasonality_by_hours(df):
                 trades[-1]['Close Price'] = close_price
 
                 # Расчет PnL и доходности
-                pnl = (open_price - close_price) * -position
+                pnl = (open_price - close_price)# * -position
                 trades[-1]['PnL'] = pnl
                 trades[-1]['Return (%)'] = (pnl / initial_investment) * 100
                 cumulative_returns.append((pnl / initial_investment) * 100)
