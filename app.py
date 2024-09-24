@@ -20,3 +20,10 @@ data = pd.read_csv(file_path)
 # Preprocess data
 data = preprocess_data(data)
 
+# Заголовок в боковом меню
+st.sidebar.title("Заголовок бокового меню")
+
+# Основной контент приложения
+st.title("Добро пожаловать в моё приложение!")
+st.write("Здесь находится основной контент приложения.")
+

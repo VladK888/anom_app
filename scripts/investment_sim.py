@@ -54,10 +54,9 @@ def Moving_Average(data, small_SMA=50, big_SMA=200):
         cumulative_returns[-1] = cumulative_return
 
     total_return = (balance - initial_investment) / initial_investment
-    annual_return = (1 + total_return) ** (3 / 12) - 1
+    annual_return = (1 + total_return) ** (12 / 3) - 1
 
-    st.write(f"Total Return: {total_return * 100:.2f}%")
-    st.write(f"Annual Return: {annual_return * 100:.2f}%")
+
 
     # График
     plt.figure(figsize=(14, 8))
@@ -89,6 +88,9 @@ def Moving_Average(data, small_SMA=50, big_SMA=200):
     plt.grid(True)
     plt.legend()
     st.pyplot(plt)
+
+    st.write(f"Total Return: {total_return * 100:.2f}%")
+    st.write(f"Annual Return: {annual_return * 100:.2f}%")
 
 def Return_Average(data, window=50, z_threshold=2):
     """
@@ -128,10 +130,9 @@ def Return_Average(data, window=50, z_threshold=2):
         cumulative_returns.append(cumulative_return)
 
     total_return = (balance - initial_investment) / initial_investment
-    annual_return = (1 + total_return) ** (3 / 12) - 1
+    annual_return = (1 + total_return) ** (12 / 3) - 1
 
-    st.write(f"Total Return: {total_return * 100:.2f}%")
-    st.write(f"Annual Return: {annual_return * 100:.2f}%")
+
 
     # Построение графиков
     plt.figure(figsize=(14, 7))
@@ -164,6 +165,9 @@ def Return_Average(data, window=50, z_threshold=2):
     plt.title('Cumulative Returns Over Time')
     plt.legend()
     st.pyplot(plt)
+
+    st.write(f"Total Return: {total_return * 100:.2f}%")
+    st.write(f"Annual Return: {annual_return * 100:.2f}%")
 
 def Seasonality_by_hours(df):
     # Добавление столбцов с днем недели и часом
@@ -263,9 +267,8 @@ def Seasonality_by_hours(df):
     #print(f"Initial Investment: ${initial_investment:.2f}")
     #print(f"Final Balance: ${balance:.2f}")
     total_return = (balance - initial_investment) / initial_investment * 100
-    annual_return = (1 + total_return) ** (3 / 12) - 1  # Приведение к годовой доходности
-    st.write(f"Total Return: {total_return:.2f}%")
-    st.write(f"Annual Return: {annual_return * 100:.2f}%")
+    annual_return = (1 + total_return) ** (12 / 3) - 1  # Приведение к годовой доходности
+
 
     # Визуализация доходности по сделке
     plt.figure(figsize=(12, 6))
@@ -288,6 +291,9 @@ def Seasonality_by_hours(df):
     plt.grid()
     plt.tight_layout()
     st.pyplot(plt)
+
+    st.write(f"Total Return: {total_return:.2f}%")
+    st.write(f"Annual Return: {annual_return * 100:.2f}%")
 
 def investment_simulation():
     st.title("Investment Strategies Simulation")
