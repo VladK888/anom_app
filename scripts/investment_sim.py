@@ -256,8 +256,8 @@ def Seasonality_by_hours(df):
     st.dataframe(trades_df)
 
     # Отображение кумулятивной доходности
-    st.write("Cumulative Returns Over Time:")
-    st.line_chart(cumulative_returns)
+    #st.write("Cumulative Returns Over Time:")
+    #st.line_chart(cumulative_returns)
 
     # Визуализация доходности по сделке
     plt.figure(figsize=(12, 6))
