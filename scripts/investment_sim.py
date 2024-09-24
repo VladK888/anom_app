@@ -266,7 +266,7 @@ def Seasonality_by_hours(df):
     #print("Final Results")
     #print(f"Initial Investment: ${initial_investment:.2f}")
     #print(f"Final Balance: ${balance:.2f}")
-    total_return = (balance - initial_investment) / initial_investment * 100
+    total_return = (balance - initial_investment) / initial_investment
     annual_return = (1 + total_return) ** (12 / 3) - 1  # Приведение к годовой доходности
 
 
@@ -292,7 +292,7 @@ def Seasonality_by_hours(df):
     plt.tight_layout()
     st.pyplot(plt)
 
-    st.write(f"Total Return: {total_return:.2f}%")
+    st.write(f"Total Return: {total_return*100:.2f}%")
     st.write(f"Annual Return: {annual_return * 100:.2f}%")
 
 def investment_simulation():
