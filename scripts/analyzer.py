@@ -258,5 +258,27 @@ def analyzer():
         # Показ графика в Streamlit
         st.pyplot(fig)
 
+        # Добавляем кнопку прокрутки вверх
+        st.components.v1.html("""
+            <style>
+                .scroll-up-button {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    z-index: 100;
+                }
+            </style>
+            <button class="scroll-up-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+                Scroll Up
+            </button>
+        """, height=0)
+
         st.write("Disclaimer ")
         st.write("The Temporal Corridors application provides only statistical information and data for the analysis of market assets. The company assumes no responsibility for any financial losses, damages, or other consequences resulting from the use of this application. The data presented and historical performance are not guarantees of future results and should not be construed as investment advice. Users make their own decisions related to trading or investing and bear full responsibility for their actions. Before making any financial transactions, it is strongly recommended to consult a professional financial advisor.")
