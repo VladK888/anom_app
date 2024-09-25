@@ -24,7 +24,7 @@ def plot_price_chart():
 
     data['Moving_Average'] = data['close'].rolling(window=50).mean()
     data['Moving_Std'] = data['close'].rolling(window=50).std()
-    data['Z_score'] = (data['close'] - data['Moving_Average']) / data['Moving_Std']
+    data['Z-score'] = (data['close'] - data['Moving_Average']) / data['Moving_Std']
     data['diff_d'] = (data['high'] - data['low']).rolling(window=200).mean()
 
     # Create a figure with subplots
@@ -38,14 +38,14 @@ def plot_price_chart():
     fig.add_trace(go.Scatter(x=data.index, y=data['diff_d'], mode='lines', name='200-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
 
     # Plot Z_Score
-    fig.add_trace(go.Scatter(x=data.index, y=data['Z_Score'], mode='lines', name='Z_Score of Close Price', line=dict(color='purple')), row=3, col=1)
+    fig.add_trace(go.Scatter(x=data.index, y=data['Z-Score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
 
     # Update layout
     fig.update_layout(height=1000, width=800, title_text="Combined Financial Metrics", showlegend=True)
     fig.update_xaxes(title_text="Date", row=3, col=1)
     fig.update_yaxes(title_text="Price", row=1, col=1)
     fig.update_yaxes(title_text="Difference", row=2, col=1)
-    fig.update_yaxes(title_text="Z_Score", row=3, col=1)
+    fig.update_yaxes(title_text="Z-Score", row=3, col=1)
 
     # Display Plotly chart in Streamlit
     st.plotly_chart(fig)

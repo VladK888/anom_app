@@ -78,8 +78,8 @@ def detect_anomalies():
     st.plotly_chart(fig)
 
     # Подготовка таблицы с событиями
-    event_info = data[data['Event'] > 0][[ 'Event', 'Event_Name']]
-    event_info.set_index('Datetime', inplace=True)
+    event_info = data[data['Event'] > 0][['Event', 'Event_Name']]
+    #event_info.set_index('Datetime', inplace=True)
 
     st.write(event_info)
 
