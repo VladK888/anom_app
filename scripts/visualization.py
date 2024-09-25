@@ -33,7 +33,7 @@ def plot_price_chart():
     # Plot Close Price
     fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price', line=dict(color='blue')), row=1, col=1)
 
-    # Plot 200-Day Difference (assuming 'range' is the correct column)
+    # Plot 200-Day Difference (assuming range is the correct column)
     fig.add_trace(go.Scatter(x=data.index, y=data['range'], mode='lines', name='200-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
 
     # Plot Z-Score
