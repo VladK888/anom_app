@@ -10,8 +10,8 @@ def plot_price_chart():
 
     def load_data(symbol):
         file_path = f'data/{symbol}_data.csv'
-        df = pd.read_csv(file_path, parse_dates=['Datetime'], index_col='Datetime')
-        return df
+        data = pd.read_csv(file_path, parse_dates=['Datetime'], index_col='Datetime')
+        return data
 
     # Application title
     st.title("The Temporal Corridors")

@@ -4,7 +4,7 @@ from scripts.analyzer import analyzer
 
 st.title("The Temporal Corridors")
 
-analyzer()
+plot_price_chart()
 
 
 
