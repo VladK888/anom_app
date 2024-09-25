@@ -259,20 +259,19 @@ def analyzer():
         st.pyplot(fig)
 
         # Добавляем кнопку прокрутки вверх
+     # Кнопка прокрутки вверх после графика
         st.components.v1.html("""
             <style>
                 .scroll-up-button {
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
+                    display: block;
+                    margin: 20px auto;
                     background-color: #4CAF50;
                     color: white;
                     border: none;
-                    padding: 10px 15px;
+                    padding: 10px 20px;
                     font-size: 16px;
                     border-radius: 5px;
                     cursor: pointer;
-                    z-index: 100;
                 }
             </style>
             <button class="scroll-up-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
