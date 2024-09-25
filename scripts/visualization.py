@@ -4,23 +4,14 @@ import streamlit as st
 import pandas as pd
 
 
-def load_data(symbol):
-    # Function to load data from CSV
-    file_path = f'data/{symbol}_data.csv'
-    try:
-        df = pd.read_csv(file_path, parse_dates=['Datetime'], index_col='Datetime')
-        return df
-    except FileNotFoundError:
-        st.error(f"Data file for {symbol} not found.")
-        return None
-    except Exception as e:
-        st.error(f"An error occurred while loading data: {e}")
-        return None
-
-
 def plot_price_chart():
     # List of symbols
     symbols = ['XAUUSD', 'EURUSD', 'GBPUSD', 'USDJPY', 'NG', 'UKOUSD', 'NAS100', 'US30', 'Coffee', 'BTCUSD']
+
+    def load_data(symbol):
+        file_path = f'data/{symbol}_data.csv'
+        df = pd.read_csv(file_path, parse_dates=['Datetime'], index_col='Datetime')
+        return df
 
     # Application title
     st.title("The Temporal Corridors")
@@ -30,15 +21,6 @@ def plot_price_chart():
 
     # Load data for the selected symbol
     data = load_data(selected_symbol)
-    if data is None:
-        return  # Stop execution if data is not loaded
-
-    # Check for required columns
-    required_columns = ['close', 'range', 'Z-Score']
-    for column in required_columns:
-        if column not in data.columns:
-            st.error(f"Column '{column}' is missing from the data.")
-            return  # Stop execution if a required column is missing
 
     # Create a figure with subplots
     fig = sp.make_subplots(rows=3, cols=1, shared_xaxes=True,

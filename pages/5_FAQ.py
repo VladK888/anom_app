@@ -31,15 +31,15 @@ st.write("""
     **Percentage of Achieved Averages**:
     - The application shows the percentage of instances where the asset demonstrates significant changes and ranges above or below its average values, which can aid in trading decisions.
 
-    **Disclaimer**:
+    **Overview**:
     - The application provides only statistical information, and users should exercise caution when making financial decisions.
     """)
 
 # Заголовок приложения
 st.subheader("Seasonality Analysis")
 st.write("""
-    Overview
-    Our application helps you analyze different financial instruments (like currencies, commodities, and indices) to identify seasonal trends and patterns. This is crucial for making informed trading decisions. We do this through various analyses, visualizations, and insights derived from historical data.
+    **Overview**
+        Our application helps you analyze different financial instruments (like currencies, commodities, and indices) to identify seasonal trends and patterns. This is crucial for making informed trading decisions. We do this through various analyses, visualizations, and insights derived from historical data.
 
     **Key Components of the Analysis**
 
@@ -98,23 +98,23 @@ st.write("""
 
 st.subheader("Investment Analysis")
 st.write("""
-    What is the purpose of this investment simulation tool?: 
-        This tool allows users to simulate and analyze different trading strategies, including Moving Average, Mean Reversion, and Seasonality Analysis. Users can upload their historical market data and visualize the performance of these strategies.,
+    - **What is the purpose of this investment simulation tool?**: 
+        - This tool allows users to simulate and analyze different trading strategies, including Moving Average, Mean Reversion, and Seasonality Analysis. Users can upload their historical market data and visualize the performance of these strategies.,
         
-    How does the Moving Average strategy work?: 
-        The Moving Average strategy calculates two simple moving averages (SMA) over defined periods. It generates buy signals when the short-term SMA crosses above the long-term SMA and sell signals when it crosses below. The tool simulates trades based on these signals and visualizes the results.",
+    - **How does the Moving Average strategy work?**: 
+        - The Moving Average strategy calculates two simple moving averages (SMA) over defined periods. It generates buy signals when the short-term SMA crosses above the long-term SMA and sell signals when it crosses below. The tool simulates trades based on these signals and visualizes the results.",
         
-    What is Mean Reversion and how is it used here?: 
-        Mean Reversion is based on the idea that asset prices tend to revert to their historical average over time. This strategy calculates the Z-score, which indicates how far the current price is from its moving average. Users can set a Z-score threshold to generate buy/sell signals based on price movements relative to this average.",
+    - **What is Mean Reversion and how is it used here?**: 
+        - Mean Reversion is based on the idea that asset prices tend to revert to their historical average over time. This strategy calculates the Z-score, which indicates how far the current price is from its moving average. Users can set a Z-score threshold to generate buy/sell signals based on price movements relative to this average.",
         
-    What kind of data can I upload for analysis?: 
-        Users can upload historical price data in CSV format, which should contain a 'date' column and a 'close' column. The tool will use the 'close' prices for analysis.",
+    - **What kind of data can I upload for analysis?**: 
+        - Users can upload historical price data in CSV format, which should contain a 'date' column and a 'close' column. The tool will use the 'close' prices for analysis.",
         
-    How are results visualized?: 
-        The tool provides various visualizations, including price plots with buy/sell signals, cumulative returns, and bar plots for average hourly and weekday returns, making it easier to interpret the performance of each strategy.",
+    - **How are results visualized?**: 
+        - The tool provides various visualizations, including price plots with buy/sell signals, cumulative returns, and bar plots for average hourly and weekday returns, making it easier to interpret the performance of each strategy.",
         
-    Can I adjust the parameters of the strategies?: 
-        Yes! The app allows you to dynamically adjust parameters such as the SMA windows for the Moving Average strategy and the Z-score threshold for the Mean Reversion strategy through sliders and input fields in the sidebar.",
+    - **Can I adjust the parameters of the strategies?**: 
+        - Yes! The app allows you to dynamically adjust parameters such as the SMA windows for the Moving Average strategy and the Z-score threshold for the Mean Reversion strategy through sliders and input fields in the sidebar.",
         
-    Is there an option to export the results?: 
-        While the current version does not include a direct export feature, users can take screenshots of the visualizations for their records.""")
+    - **Is there an option to export the results?**: 
+        - While the current version does not include a direct export feature, users can take screenshots of the visualizations for their records.""")
