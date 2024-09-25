@@ -79,7 +79,7 @@ def detect_anomalies():
 
     # Подготовка таблицы с событиями
     event_info = data[data['Event'] > 0][['Event', 'Event_Name']]
-    #event_info.set_index('Datetime', inplace=True)
+    ###event_info.set_index('Datetime', inplace=True)
 
     st.write(event_info)
 

@@ -29,7 +29,7 @@ def plot_price_chart():
 
     # Create a figure with subplots
     fig = sp.make_subplots(rows=3, cols=1, shared_xaxes=True,
-                           subplot_titles=('Close Price', '200-Day Difference (High - Low)', 'Z_Score of Close Price'))
+                           subplot_titles=('close', 'diff_d', 'Z-score'))
 
     # Plot Close Price
     fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price', line=dict(color='blue')), row=1, col=1)
@@ -38,13 +38,13 @@ def plot_price_chart():
     fig.add_trace(go.Scatter(x=data.index, y=data['diff_d'], mode='lines', name='200-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
 
     # Plot Z_Score
-    fig.add_trace(go.Scatter(x=data.index, y=data['Z-Score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
+    fig.add_trace(go.Scatter(x=data.index, y=data['Z-score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
 
     # Update layout
     fig.update_layout(height=1000, width=800, title_text="Combined Financial Metrics", showlegend=True)
     fig.update_xaxes(title_text="Date", row=3, col=1)
-    fig.update_yaxes(title_text="Price", row=1, col=1)
-    fig.update_yaxes(title_text="Difference", row=2, col=1)
+    fig.update_yaxes(title_text="close", row=1, col=1)
+    fig.update_yaxes(title_text="diff_d", row=2, col=1)
     fig.update_yaxes(title_text="Z-Score", row=3, col=1)
 
     # Display Plotly chart in Streamlit
