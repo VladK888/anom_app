@@ -308,13 +308,13 @@ def investment_simulation():
     st.write(f"Data for {selected_symbol}:")
 
     if 'close' in data.columns:
-        # Запрос на выбор стратегии
+        # Переместили выбор стратегии и параметры ниже выбора символа
         strategy = st.sidebar.selectbox("Select Strategy", ["Moving Average", "Mean Reversion", "Seasonality Analysis"])
 
         if strategy == "Moving Average":
             Moving_Average(data)
         elif strategy == "Mean Reversion":
-            window = st.sidebar.slider("Rolling Window Size", 1, 100, 50)
+            window = st.sidebar.slider("Rolling Window Size", 1, 200, 50)
             z_threshold = st.sidebar.slider("Z-Score Threshold", 0.0, 5.0, 2.0)
             Return_Average(data, window, z_threshold)
         elif strategy == "Seasonality Analysis":
