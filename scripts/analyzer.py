@@ -259,25 +259,8 @@ def analyzer():
         st.pyplot(fig)
 
         # Добавляем кнопку прокрутки вверх
-     # Кнопка прокрутки вверх после графика
-        st.components.v1.html("""
-            <style>
-                .scroll-up-button {
-                    display: block;
-                    margin: 20px auto;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
-            </style>
-            <button class="scroll-up-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-                Scroll Up
-            </button>
-        """, height=0)
+        # Выбор символа внизу страницы
+        selected_symbol_bottom = st.selectbox("Choose symbol again", symbols, key="analyzer_symbol_bottom")
 
         st.write("Disclaimer ")
         st.write("The Temporal Corridors application provides only statistical information and data for the analysis of market assets. The company assumes no responsibility for any financial losses, damages, or other consequences resulting from the use of this application. The data presented and historical performance are not guarantees of future results and should not be construed as investment advice. Users make their own decisions related to trading or investing and bear full responsibility for their actions. Before making any financial transactions, it is strongly recommended to consult a professional financial advisor.")
