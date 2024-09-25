@@ -6,7 +6,7 @@ st.subheader("Disclaimer")
 st.write("The Temporal Corridors application provides only statistical information and data for the analysis of market assets. The company assumes no responsibility for any financial losses, damages, or other consequences resulting from the use of this application. The data presented and historical performance are not guarantees of future results and should not be construed as investment advice. Users make their own decisions related to trading or investing and bear full responsibility for their actions. Before making any financial transactions, it is strongly recommended to consult a professional financial advisor.")
 
 st.subheader("Time Used for Analysis")
-st.write("All statistical information and data presented in the Temporal Corridors application are based on the time corresponding to Universal Coordinated Time (UTC+3). The time indicated in the application may differ from the local time of users. Users are responsible for correctly understanding the time and its impact on their trading decisions. The application assumes no responsibility for users' decisions; all actions are made at the client's discretion. It is recommended to take time differences into account when analyzing data and conducting trading operations.")
+st.write("All statistical information and data presented in the Temporal Corridors application are based on the time corresponding to Universal Coordinated Time (UTC+3). The time indicated in the application may differ from the local time of users. Users are responsible for correctly understanding the time and its impact on their trading decisions. The application assumes no responsibility for users' decisions; all actions are made at the client's discretion.")
 
 st.subheader("Price Change Analysis")
 st.write("""
@@ -38,78 +38,64 @@ st.write("""
 # Заголовок приложения
 st.subheader("Seasonality Analysis")
 st.write("""
-    ### Overview
+    Overview
     Our application helps you analyze different financial instruments (like currencies, commodities, and indices) to identify seasonal trends and patterns. This is crucial for making informed trading decisions. We do this through various analyses, visualizations, and insights derived from historical data.
 
-    ### Key Components of the Analysis
+    **Key Components of the Analysis**
 
-    1. **Seasonal Analysis**:
+    - **Seasonal Analysis**:
        - We examine how the price movements of a selected financial instrument change over different months of the year. This can help identify whether certain months tend to yield higher profits or losses, allowing you to make better trading decisions.
 
-    2. **Data Visualization**:
+    - **Data Visualization**:
        - The application creates clear visualizations, including bar charts and heatmaps, to illustrate important metrics. These charts show trends such as:
          - **Median Price Differences**: The typical change in price for each month.
          - **SMA (Simple Moving Average) Differences**: This helps in understanding the average price trends over time.
          - **Maximum Movement**: How much the price fluctuates during the month.
 
-    3. **Monthly and Weekly Patterns**:
+    - **Monthly and Weekly Patterns**:
        - By analyzing data over months and breaking it down by days of the week and hours, we can observe specific patterns. For example, you might notice that prices tend to rise more frequently on Mondays or during certain hours of the day.
 
-    4. **Heatmaps**:
+    - **Heatmaps**:
        - Heatmaps provide a visual representation of the data, making it easy to identify high and low values at a glance. They help you see:
          - **Range of Prices**: How the price range varies by day and hour.
          - **Up/Down Movement**: How often the price goes up or down at different times of the week.
 
-    ### Trading Strategy
+    **Trading Strategy**
     Based on this analysis, you can develop a strategy that aligns with the seasonal patterns identified:
 
-    1. **Timing Your Trades**: 
+    - **Timing Your Trades**: 
        - Use the information about which months are typically profitable to time your trades better. For example, if historical data shows that a particular currency usually rises in April, you might consider buying that currency in March.
 
-    2. **Understanding Daily Patterns**:
+    - **Understanding Daily Patterns**:
        - If the analysis indicates that prices are more volatile on certain days or hours, you can adjust your trading schedule to take advantage of these fluctuations. For example, if prices tend to drop on Wednesdays, you may decide to sell on that day.
 
-    3. **Adjusting for Volatility**:
+    - **Adjusting for Volatility**:
        - Knowing the maximum and minimum movements can help you set appropriate stop-loss and take-profit levels, protecting your investments while maximizing potential gains.
 
-    ### Conclusion
+    **Conclusion**
     In summary, our application provides you with a comprehensive analysis of seasonal trends in financial markets. By understanding these patterns, you can make more informed trading decisions, ultimately enhancing your chances of success. The combination of clear visualizations and strategic insights makes it easier for you to navigate the complexities of trading.
     """)
 # Заголовок приложения
 st.subheader("Price Anomaly Analysis")
 st.write("""
-    ### Overview
+    **Overview**
     The Temporal Corridors application focuses on detecting anomalies in financial market data by analyzing historical price movements and significant news events. Understanding anomalies can help traders make informed decisions based on how specific events influence asset prices.
 
-    ### Key Components of the Analysis
+    **Key Components of the Analysis**
 
-    1. **Anomaly Detection**:
+    - **Anomaly Detection**:
        - This analysis identifies significant deviations in asset prices that correspond to major news events. By examining how prices react to these events, traders can discern patterns that may indicate future price movements.
 
-    2. **Event Integration**:
+    - **Event Integration**:
        - The application merges price data with relevant news events to visualize the impact of these events on asset prices. This allows traders to understand the context behind price movements.
 
-    3. **Visualization**:
+    - **Visualization**:
        - The application uses interactive Plotly graphs to display price movements along with markers indicating significant news events. These markers represent instances where an event occurred, providing a clear visual reference for price changes.
 
-    4. **Event Information Table**:
+    - **Event Information Table**:
        - A summary table shows the events that have influenced price movements, giving traders quick access to relevant information that can aid their decision-making processes.
-
-    ### Trading Strategy
-    By leveraging the insights gained from anomaly detection and event analysis, traders can adopt a more strategic approach:
-
-    1. **Timing Trades**:
-       - Understanding how prices respond to specific news events can inform traders when to enter or exit positions. For example, if a particular type of news consistently leads to price drops, a trader might consider selling before similar news is released.
-
-    2. **Risk Management**:
-       - By recognizing potential anomalies, traders can set tighter stop-loss orders during volatile periods following significant news events, reducing the risk of losses.
-
-    3. **Market Sentiment Analysis**:
-       - By correlating price changes with news events, traders can gauge market sentiment and adjust their strategies accordingly. Positive news may indicate a good buying opportunity, while negative news could signal a need to sell.
-
-    ### Conclusion
-    The anomaly detection feature of our application allows traders to identify and understand significant price movements in relation to news events. By integrating historical data and event analysis, you can enhance your trading strategies and make more informed decisions in the fast-paced financial markets.
     """)
+
 st.subheader("Investment Analysis")
 st.write("""
     What is the purpose of this investment simulation tool?: 
