@@ -25,7 +25,7 @@ def plot_price_chart():
     data['Moving_Average'] = data['close'].rolling(window=50).mean()
     data['Moving_Std'] = data['close'].rolling(window=50).std()
     data['Z-score'] = (data['close'] - data['Moving_Average']) / data['Moving_Std']
-    data['diff_d'] = (data['high'] - data['low']).rolling(window=200).mean()
+    data['diff_d'] = (data['high'] - data['low']).rolling(window=50).mean()
 
     # Create a figure with subplots
     fig = sp.make_subplots(rows=3, cols=1, shared_xaxes=True,
@@ -35,7 +35,7 @@ def plot_price_chart():
     fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price', line=dict(color='blue')), row=1, col=1)
 
     # Plot 200-Day Difference (assuming range is the correct column)
-    fig.add_trace(go.Scatter(x=data.index, y=data['diff_d'], mode='lines', name='200-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
+    fig.add_trace(go.Scatter(x=data.index, y=data['diff_d'], mode='lines', name='50-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
 
     # Plot Z_Score
     fig.add_trace(go.Scatter(x=data.index, y=data['Z-score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
