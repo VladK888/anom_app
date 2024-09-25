@@ -19,7 +19,7 @@ def detect_anomalies():
         return news_data
 
     # Заголовок приложения
-    st.title("Analysis of Financial Anomalies")
+    st.title("Temporal Corridors")
 
     # Выбор символа
     selected_symbol = st.selectbox("Choose symbol", symbols, key="anomaly_symbol")
@@ -78,7 +78,7 @@ def detect_anomalies():
     st.plotly_chart(fig)
 
     # Подготовка таблицы с событиями
-    event_info = data[data['Event'] > 0][['Datetime', 'Event', 'Event_Name', 'Actual', 'Forecast', 'Previous']]
+    event_info = data[data['Event'] > 0][[ 'Event', 'Event_Name']]
     event_info.set_index('Datetime', inplace=True)
 
     st.write(event_info)

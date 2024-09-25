@@ -24,7 +24,7 @@ def seasonality():
             return df
 
         # Заголовок приложения
-        st.title("Analyze Finance Data")
+        st.title("Temporal Corridors")
 
         # Выбор символа
         selected_symbol = st.selectbox("Choose symbol", symbols, key="seasonality_symbol")

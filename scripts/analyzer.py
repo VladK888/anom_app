@@ -86,7 +86,7 @@ def analyzer():
 
         # Загрузка данных для выбранного символа
         filtered_data = load_data(selected_symbol)
-        st.write(f"Data for {selected_symbol}:")
+
 
         # Среднее изменение и диапазон выше и ниже SMA_50
         avg_changes_and_range_above_sma_50 = calculate_changes_and_range(filtered_data, 'Above_SMA_50')
@@ -169,8 +169,8 @@ def analyzer():
         # Время нахождения выше/ниже SMA_50
         st.subheader(f"Time spent above and below SMA_200 {selected_symbol}")
         fig, ax = plt.subplots(figsize=(10, 6))
-        plt.hist(filtered_data[filtered_data['close'] > filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Above SMA_50')
-        plt.hist(filtered_data[filtered_data['close'] <= filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Below SMA_50')
+        plt.hist(filtered_data[filtered_data['close'] > filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Above SMA_200')
+        plt.hist(filtered_data[filtered_data['close'] <= filtered_data['SMA_200']]['close'], bins=30, alpha=0.5, label='Below SMA_200')
         plt.xlabel('Price close')
         plt.ylabel('Frequency')
         plt.title('Time spent above and below SMA_200')
@@ -258,14 +258,7 @@ def analyzer():
         # Показ графика в Streamlit
         st.pyplot(fig)
 
-        # Добавляем кнопку прокрутки вверх
-        # Кнопка прокрутки вверх после визуализации
-        if st.button("Scroll Up"):
-            st.markdown("""
-                <script>
-                window.scrollTo(0, 0);
-                </script>
-                """, unsafe_allow_html=True)
+
 
         st.write("Disclaimer ")
         st.write("The Temporal Corridors application provides only statistical information and data for the analysis of market assets. The company assumes no responsibility for any financial losses, damages, or other consequences resulting from the use of this application. The data presented and historical performance are not guarantees of future results and should not be construed as investment advice. Users make their own decisions related to trading or investing and bear full responsibility for their actions. Before making any financial transactions, it is strongly recommended to consult a professional financial advisor.")
