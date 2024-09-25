@@ -118,3 +118,19 @@ st.write("""
         
     - **Is there an option to export the results?**: 
         - While the current version does not include a direct export feature, users can take screenshots of the visualizations for their records.""")
+
+st.subheader("Main menu (app)")
+
+st.write("- **What is the Close Price?**")
+st.write("The Close Price is the last trading price of the asset at the end of the trading day. It is used to evaluate market performance and is a key metric for traders.")
+
+st.write("- **What does the 200-Day Difference (High - Low) represent?**")
+st.write("This metric measures the difference between the highest and lowest prices of the asset over the last 200 days. It helps identify the asset's price volatility and trading range.")
+
+st.write("- **What is the Z-Score of Close Price?**")
+st.write("The Z-Score is a statistical measure that indicates how many standard deviations a data point is from the mean. In this context, it helps identify whether the current price is overbought or oversold relative to historical prices.")
+
+st.write("- **How can I use this information for trading?**")
+st.write("By analyzing the Close Price along with the 200-Day Difference and the Z-Score, traders can make informed decisions about potential entry or exit points in the market. A high Z-Score may indicate overbought conditions, while a low Z-Score may suggest oversold conditions.")
+
+
