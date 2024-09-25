@@ -22,6 +22,10 @@ def plot_price_chart():
     # Load data for the selected symbol
     data = load_data(selected_symbol)
 
+    data['Moving_Average'] = data['close'].rolling(window=50).mean()
+    data['Moving_Std'] = data['close'].rolling(window=50).std()
+    data['Z_score'] = (data['close'] - data['Moving_Average']) / data['Moving_Std']
+
     # Create a figure with subplots
     fig = sp.make_subplots(rows=3, cols=1, shared_xaxes=True,
                            subplot_titles=('Close Price', '200-Day Difference (High - Low)', 'Z-Score of Close Price'))
@@ -33,7 +37,7 @@ def plot_price_chart():
     fig.add_trace(go.Scatter(x=data.index, y=data['range'], mode='lines', name='200-Day Difference (High - Low)', line=dict(color='red')), row=2, col=1)
 
     # Plot Z-Score
-    fig.add_trace(go.Scatter(x=data.index, y=data['Z-Score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
+    fig.add_trace(go.Scatter(x=data.index, y=data['Z_Score'], mode='lines', name='Z-Score of Close Price', line=dict(color='purple')), row=3, col=1)
 
     # Update layout
     fig.update_layout(height=1000, width=800, title_text="Combined Financial Metrics", showlegend=True)
